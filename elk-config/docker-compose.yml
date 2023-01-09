@@ -10,11 +10,13 @@ services:
       - 9300:9300
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
-      - elasticsearch-config:/usr/share/elasticsearch/config
+      
     environment:
      
       - "ES_JAVA_OPTS=-Xms1g -Xmx2g"
-      - discovery.type=single-node
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=true"
+      - "xpack.security.enrollment.enabled=true"
     networks:
       - elastic
 
@@ -27,6 +29,7 @@ services:
     depends_on:
       - elasticsearch
     environment:
+      - "xpack.security.enrollment.enabled=true"
       - ELASTICSEARCH_URL=http://localhost:9200
     networks:
       - elastic
@@ -37,4 +40,4 @@ networks:
 
 volumes:
   elasticsearch-data:
-  elasticsearch-config:
+  
